@@ -29,8 +29,8 @@ The only drawback is ...$35 cost is kinds of high...
   VirtualBox is the only one open source virtual machine with a relatively large user base. And it seems like a good candidate for the purpose.
   
 # VirtualBox compilation setup
-VirtualBox itself is 32bit (althrough it can virtualize 64bit OS). So it is realy wisden to use 32bit OS to build VirtualBox, which avoid a lot of anony compatibility issues.
-VirtualBox can be build under Window, Linux and OSX, but Linux(I use Ubuntu14_32bit in this case) gives you the most convenience way to setup all the libraries VirtualBox needed. Refer to this link to setup the libraries and build VirtualBox:
+VirtualBox itself is 32bit (althrough it can virtualize 64bit OS). So it is really wise to use 32bit OS to build VirtualBox, which avoid a lot of annoying compatibility issues.
+VirtualBox can be build under Window, Linux and OSX, but Linux (I use Ubuntu14_32bit in this case) gives you the most convenience way to setup all the libraries VirtualBox needed. Refer to this link to setup the libraries and build VirtualBox:
 https://www.virtualbox.org/wiki/Linux%20build%20instructions
 
 To fetech the source code:
@@ -52,8 +52,25 @@ When the build completes, you might need to build and isntall and load the drive
 
 But the tricky thing is: it turned out that the drivers were not working on my machine. I had to install a VBox release version(with the same revision number as the source code) which helps to install the drivers correctly.
 
-And then you can installed a windows 10 as client machine.
+Not the VBox you build can be used, and you can installed a windows 10 as client machine.
 
+# VirtualBox Print debug message.
+There are many verbosity level in VBOX source code. The one can print debug message under release build is:
 
+LogRel((char* ...))
 
+Eg. 
 
+LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
+
+You can print message at any place. Note that too much print will slow down the virtual machine speed.
+
+# USB Foundmantal Knowledge.
+
+In order to hack the USB traffic, some knowledge on USB is needed.
+
+All USB traffic in the driver will be carried in the form of URB (USB Request Block), including both the request and response. URB will contains some information about the endpoint, direction and data payload.
+
+So don't surpise to see a lot of URB related structures and variables in the source code.
+
+# Hack USB traffic
