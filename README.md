@@ -1,6 +1,6 @@
 # virtualbox_usb_mitm
 
-For some resone, I want to create a USB Man-In-The-Middle function. 
+For some resone, I want to implement USB Man-In-The-Middle function. 
 My idea is :
 
 [Real USB Device]  <---> [USB-MITM] <---> [Host OS]
@@ -13,7 +13,7 @@ But I found this is not easy to achieve this purpose.
 But this module was deprecated since Windows 8. 
 
 - For Linux there is USB Gadget, which enable USB port works under device mode instead of host mode as it usually do. 
-- 
+
 [Real USB Device] <----> [USB Host <---> USB Gadget] <---> [Final Host]
 
 To use USB Gadget the USB controller should support USB OTG. For most desktop for laptop computers, the USB ports are always work under host mode, so it might not support USB OTG. And USB Gadget is usually not enable by default, user might need recompile the linux kernel to enable it.
