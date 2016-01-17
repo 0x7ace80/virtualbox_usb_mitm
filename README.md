@@ -30,16 +30,29 @@ The only drawback is ...$35 cost is kinds of high...
   
 # VirtualBox compilation setup
 VirtualBox itself is 32bit (althrough it can virtualize 64bit OS). So it is realy wisden to use 32bit OS to build VirtualBox, which avoid a lot of anony compatibility issues.
-VirtualBox can be build under Window, Linux and OSX, but Linux(I use Ubuntu in this case) gives you the most convenience way to setup all the libraries VirtualBox needed. Refer to this link:
+VirtualBox can be build under Window, Linux and OSX, but Linux(I use Ubuntu14_32bit in this case) gives you the most convenience way to setup all the libraries VirtualBox needed. Refer to this link to setup the libraries and build VirtualBox:
 https://www.virtualbox.org/wiki/Linux%20build%20instructions
+
 To fetech the source code:
 https://www.virtualbox.org/wiki/Downloads
 
 GCC/G++-4.9 are needed.
+
 sudo add-apt-repository ppc:ubuntu-toolchain-r/test && sudo apt-get update && sudo apt-get install gcc-4.9 g++-4.9 
 
+And set gcc/g++-4.9 to be default compiler.
 
+Now decompress the source code downloaded from VirtualBox.org and then enter the root directory. Build the VirtualBox following the instructions as the manual said. The configuration command I use is 
 
+./configure --disable-hardening --target-arch=x86
+
+It takes about 1hr and a half to complete (on my old 2010 Macbook and Yes, I took some time to install Ubuntu on it and setup its drivers). Have a cup of coffee and wait.
+
+When the build completes, you might need to build and isntall and load the drivers VBox will use. 
+
+But the tricky thing is: it turned out that the drivers were not working on my machine. I had to install a VBox release version(with the same revision number as the source code) which helps to install the drivers correctly.
+
+And then you can installed a windows 10 as client machine.
 
 
 
