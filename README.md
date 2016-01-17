@@ -22,7 +22,7 @@ To use USB Gadget the USB controller should support USB OTG. For most desktop fo
 - Some Raspberry-Pi-like-PC can be configured to be a USB-MITM. BeagleBone support USB Gadget by default. There is a USBProxy project based on BeagleBone: https://github.com/dominicgs/USBProxy
 The only drawback is ...$35 cost is kinds of high...
 
-  An alternative way to implement this function is utilizing vitual machine. We can try to hack the traffic from host OS to the client OS. 
+  An alternative way to implement this function is utilizing virtual machine. We can try to hack the traffic from host OS to the client OS. 
 
   [Real USB Device] <---> [HOST OS and VirtualMachine] <---> [Client OS]
 
@@ -50,7 +50,7 @@ It takes about 1hr and a half to complete (on my old 2010 Macbook and Yes, I too
 
 When the build completes, you might need to build and isntall and load the drivers VBox will use. 
 
-But the tricky thing is: it turned out that the drivers were not working on my machine. I had to install a VBox release version(with the same revision number as the source code) which helps to install the drivers correctly.
+But the tricky thing is: it turned out that the drivers were not working on my machine. I had to install a release version VBox (with the same revision number as the source code) which helps to install the drivers correctly.
 
 Not the VBox you build can be used, and you can installed a windows 10 as client machine.
 
@@ -67,10 +67,31 @@ You can print message at any place. Note that too much print will slow down the 
 
 # USB Foundmantal Knowledge.
 
-In order to hack the USB traffic, some knowledge on USB is needed.
-
-All USB traffic in the driver will be carried in the form of URB (USB Request Block), including both the request and response. URB will contains some information about the endpoint, direction and data payload.
+All USB traffics in the driver will be carried in the form of URB (USB Request Block), including both the request and response. URB will contain information like endpoint, direction and data payload.
 
 So don't surpise to see a lot of URB related structures and variables in the source code.
 
 # Hack USB traffic
+
+VBox virtualized USB device and use the virtualized usb device to communicate with real USB device on host OS.
+
+the model of USB device located at:
+
+src/VBox/Devices/USB/linux/USBProxyDevice-linux.cpp
+
+The function this USB device model will call to issue USB request is:
+
+usbProxyLinuxUrbQueue
+
+and the function to handle response is :
+
+usbProxyLinuxUrbReap
+
+The struction which contains the URB is pUrbLnx->pKUrb.
+
+E.g. You can modify the response data in the end of usbProxyLinuxUrbReap:
+
+for (unsigned int i = 0; i < pUrbLnx->pKUrb.buffer_length; i++)
+{
+    pUrbLnx->pKUrb.buffer[i] = i;
+}
