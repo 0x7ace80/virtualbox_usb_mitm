@@ -51,13 +51,15 @@ Now decompress the source code downloaded from VirtualBox.org and then enter the
 
 `./configure --disable-hardening --target-arch=x86`
 
-It takes about 1hr and a half to complete (on my old 2010 Macbook and Yes, I took some time to install Ubuntu on it and setup its drivers). Have a cup of coffee and wait.
+It usually takes about 1hr to complete (on my old 2010 Macbook and Yes, I took some time to install Ubuntu on it and setup its drivers). Have a cup of coffee and wait.
 
-When the build completes, you might need to build and isntall and load the drivers VBox will use. 
+When the build completes, you might need to build, install and load the drivers VBox will use. It can be done by execute command at `out/Linux.x86/release/bin`
 
-But the tricky thing is: it turned out that the drivers were not working on my machine. I had to install a release version VBox (with the same revision number as the source code) which helps to install the drivers correctly.
+`make && make install && make load`
 
-Not the VBox you build can be used, and you can installed a windows 10 as client machine.
+But the `TRICKY` thing is: it turned out that the drivers were not working on my machine. I had to install a release version VBox (with the same revision number as the source code) which helps to install the drivers correctly.
+
+Now the VBox you build can be used, and you can install a windows 10 as client OS.
 
 USB Foundmantal Knowledge
 =
@@ -83,9 +85,9 @@ and the function to handle response is :
 
 `static DECLCALLBACK(PVUSBURB) usbProxyLinuxUrbReap(PUSBPROXYDEV pProxyDev, RTMSINTERVAL cMillies)`
 
-The struction which contains the URB is pUrbLnx->pKUrb.
+The struction which contains the system URB is `pUrbLnx->pKUrb`. and `pUrbLnx` is internal URB format used by VBox.
 
-E.g. You can modify the response data in the end of `usbProxyLinuxUrbReap` before "return" statement :
+E.g. You can modify the response data in the end of `usbProxyLinuxUrbReap` before "return" statement of cause.
 ```c
 if (pUrbLnx->enmDir == VUSBDIRECTION_IN && pUrb->EndPt == 1) // This is input URB from endpoint 1.
 {
