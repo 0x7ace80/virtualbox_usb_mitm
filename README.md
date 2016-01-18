@@ -43,13 +43,13 @@ https://www.virtualbox.org/wiki/Downloads
 
 GCC/G++-4.9 are needed.
 
-sudo add-apt-repository ppc:ubuntu-toolchain-r/test && sudo apt-get update && sudo apt-get install gcc-4.9 g++-4.9 
+`sudo add-apt-repository ppc:ubuntu-toolchain-r/test && sudo apt-get update && sudo apt-get install gcc-4.9 g++-4.9`
 
 And set gcc/g++-4.9 to be default compiler.
 
 Now decompress the source code downloaded from VirtualBox.org and then enter the root directory. Build the VirtualBox following the instructions as the manual said. The configuration command I use is 
 
-./configure --disable-hardening --target-arch=x86
+`./configure --disable-hardening --target-arch=x86`
 
 It takes about 1hr and a half to complete (on my old 2010 Macbook and Yes, I took some time to install Ubuntu on it and setup its drivers). Have a cup of coffee and wait.
 
@@ -62,7 +62,7 @@ Not the VBox you build can be used, and you can installed a windows 10 as client
 USB Foundmantal Knowledge
 =
 
-All USB traffics in the driver will be carried in the form of URB (USB Request Block), including both the request and response. URB will contain information like endpoint, direction and data payload.
+All USB traffics in the driver will be carried in the form of `URB` (USB Request Block), including both the request and response. URB will contain information like endpoint, direction and data payload.
 
 So don't surpise to see a lot of URB related structures and variables in the source code.
 
@@ -77,21 +77,25 @@ the model of USB device located at:
 
 The function this USB device model will call to issue USB request is:
 
-`usbProxyLinuxUrbQueue`
+`static DECLCALLBACK(int) usbProxyLinuxUrbQueue(PUSBPROXYDEV pProxyDev, PVUSBURB pUrb)`
 
 and the function to handle response is :
 
-`usbProxyLinuxUrbReap`
+`static DECLCALLBACK(PVUSBURB) usbProxyLinuxUrbReap(PUSBPROXYDEV pProxyDev, RTMSINTERVAL cMillies)`
 
 The struction which contains the URB is pUrbLnx->pKUrb.
 
-E.g. You can modify the response data in the end of usbProxyLinuxUrbReap:
+E.g. You can modify the response data in the end of `usbProxyLinuxUrbReap` before "return" statement :
 ```c
-for (unsigned int i = 0; i < pUrbLnx->pKUrb.buffer_length; i++)
+if (pUrbLnx->enmDir == VUSBDIRECTION_IN && pUrb->EndPt == 1) // This is input URB from endpoint 1.
 {
-    pUrbLnx->pKUrb.buffer[i] = i;
+  for (unsigned int i = 0; i < pUrbLnx->pKUrb.buffer_length; i++)
+  {
+      pUrbLnx->pKUrb.buffer[i] = i;
+  }
 }
 ```
+Usually, there are many kinds of URB will go through `usbProxyLinuxUrbReap` function, a filter function should be used to make sure we modify the correct URB package. 
 
 Debug
 =
