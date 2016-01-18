@@ -28,13 +28,16 @@ The only drawback is ...$35 cost is kinds of high...
   An alternative way to implement this function is utilizing virtual machine. We can try to hack the traffic from host OS to the client OS. 
 
   `[Real USB Device] <---> [HOST OS and VirtualMachine] <---> [Client OS]`
+  
   There are some tickets in StackOverflow mentioned this approch but no one give detailed information unfortunately.
+  
   VirtualBox is the only one open source virtual machine with a relatively large user base. And it seems like a good candidate for the purpose.
   
 VirtualBox Compilation Setup
 =
 
 VirtualBox itself is 32bit (althrough it can virtualize 64bit OS). So it is really wise to use 32bit OS to build VirtualBox, which avoid a lot of annoying compatibility issues.
+
 VirtualBox can be build under Window, Linux and OSX, but Linux (I use Ubuntu14_32bit in this case) gives you the most convenience way to setup all the libraries VirtualBox needed. Refer to this link to setup the libraries and build VirtualBox:
 https://www.virtualbox.org/wiki/Linux%20build%20instructions
 
