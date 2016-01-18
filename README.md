@@ -74,7 +74,9 @@ Hack USB Traffic
 
 VBox virtualized USB device and use the virtualized usb device to communicate with real USB device on host OS.
 
-the model of USB device located at:
+`[VirtualBox VirtualMachineMonitor] -> [VBox Device Model (Proxy)] -> [ HostOS VBox Driver] -> [Real USB Device]`
+
+the model of USB device proxy located at:
 
 `src/VBox/Devices/USB/linux/USBProxyDevice-linux.cpp`
 
