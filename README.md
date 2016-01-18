@@ -137,7 +137,7 @@ Eg.
 ```c
 LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
 ```
-You can print message at any place. Note that too much print will slow down the virtual machine speed.
+You can print message at any place. Note that too much print will slow down the virtual machine.
 
 USB traffic can also be logged under Pcap format in VBox:
 
