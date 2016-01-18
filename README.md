@@ -111,7 +111,7 @@ and the function to handle response is :
 
 `static DECLCALLBACK(PVUSBURB) usbProxyLinuxUrbReap(PUSBPROXYDEV pProxyDev, RTMSINTERVAL cMillies)`
 
-The struction which contains the system URB is `pUrbLnx->pKUrb`. and `pUrbLnx` is internal URB format used by VBox.
+The structure which contains the system URB is `pUrbLnx->pKUrb`. and `pUrbLnx` is internal URB format used by VBox.
 
 E.g. You can modify the response data in the end of `usbProxyLinuxUrbReap` before "return" statement of cause.
 ```c
