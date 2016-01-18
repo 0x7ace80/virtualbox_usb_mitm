@@ -69,6 +69,26 @@ All USB traffics in the driver will be carried in the form of `URB` (USB Request
 
 So don't surpise to see a lot of URB related structures and variables in the source code.
 
+In Linux, the System URB structure is defined in `/usr/include/linux/usbdevice_fs.h`
+
+```c
+struct usbdevfs_urb {
+        unsigned char type;
+        unsigned char endpoint;
+        int status;
+        unsigned int flags;
+        void *buffer;
+        int buffer_length;
+        int actual_length;
+        int start_frame;
+        int number_of_packets;
+        int error_count;
+        unsigned int signr;     /* signal to be sent on completion, or 0 if none should be sent. */
+        void *usercontext;
+        struct usbdevfs_iso_packet_desc iso_frame_desc[0];
+};
+```
+
 Hack USB Traffic
 =
 
