@@ -73,13 +73,13 @@ In Linux, the System URB structure is defined in `/usr/include/linux/usbdevice_f
 
 ```c
 struct usbdevfs_urb {
-        unsigned char type;
-        unsigned char endpoint;
+        unsigned char type; // Can be Control, Interrupt, Bulk or Isochronus, we usually only care Bulk transfer.
+        unsigned char endpoint; // If the endpoint >= 0x80, this is INPUT package.
         int status;
         unsigned int flags;
-        void *buffer;
-        int buffer_length;
-        int actual_length;
+        void *buffer; // Pointer of the data buffer
+        int buffer_length; // Size of the data buffer
+        int actual_length; // Data size
         int start_frame;
         int number_of_packets;
         int error_count;
