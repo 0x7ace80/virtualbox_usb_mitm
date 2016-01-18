@@ -64,12 +64,13 @@ VirtualBox Print Debug Message
 
 There are many verbosity level in VBOX source code. The one can print debug message under release build is:
 
+```c
 LogRel((char* ...))
-
+```
 Eg. 
-
+```c
 LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
-
+```
 You can print message at any place. Note that too much print will slow down the virtual machine speed.
 
 USB Foundmantal Knowledge
@@ -86,21 +87,22 @@ VBox virtualized USB device and use the virtualized usb device to communicate wi
 
 the model of USB device located at:
 
-src/VBox/Devices/USB/linux/USBProxyDevice-linux.cpp
+`src/VBox/Devices/USB/linux/USBProxyDevice-linux.cpp`
 
 The function this USB device model will call to issue USB request is:
 
-usbProxyLinuxUrbQueue
+`usbProxyLinuxUrbQueue`
 
 and the function to handle response is :
 
-usbProxyLinuxUrbReap
+`usbProxyLinuxUrbReap`
 
 The struction which contains the URB is pUrbLnx->pKUrb.
 
 E.g. You can modify the response data in the end of usbProxyLinuxUrbReap:
-
+```c
 for (unsigned int i = 0; i < pUrbLnx->pKUrb.buffer_length; i++)
 {
     pUrbLnx->pKUrb.buffer[i] = i;
 }
+```
