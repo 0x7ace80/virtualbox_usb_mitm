@@ -65,6 +65,8 @@ I had to install a prebuild release version VBox (with the same revision number 
 
 Now the VBox you build can work, and you can install a windows 10 as client OS.
 
+To enable USB2.0 and 3.0 device, `VirtualBox Extension Pack` should be installed.
+
 USB Foundmantal Knowledge
 =
 
