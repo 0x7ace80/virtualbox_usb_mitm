@@ -6,19 +6,19 @@ Preview
 For some resone, I want to implement USB Man-In-The-Middle function. 
 My idea is :
 
-[Real USB Device]  <---> [USB-MITM] <---> [Host OS]
+`[Real USB Device]  <---> [USB-MITM] <---> [Host OS]`
 
 But I found it is not easy to achieve this purpose.
 
 - For Windows, there used to be a Device Simulation Framework on Windows 7. https://msdn.microsoft.com/en-us/library/ff538304(v=vs.85).aspx As a part of Windows Driver Kit, it can simulate all kinds of USB device. The implementation could be:
 
-  [Window DSF generate USB traffics] <---> [Host] 
+  `[Window DSF generate USB traffics] <---> [Host] `
 
   But this module was deprecated since Windows 8. 
 
 - For Linux there is USB Gadget, which enable USB port works under device mode instead of host mode as it usually do. 
 
-  [Real USB Device] <----> [USB Host <---> USB Gadget] <---> [Final Host]
+  `[Real USB Device] <----> [USB Host <---> USB Gadget] <---> [Final Host]`
 
   To use USB Gadget the USB controller should support USB OTG. For most desktop for laptop computers, the USB ports are always work under host mode, so it might not support USB OTG. And USB Gadget is usually not enable by default, user might need recompile the linux kernel to enable it.
 
@@ -27,7 +27,7 @@ The only drawback is ...$35 cost is kinds of high...
 
   An alternative way to implement this function is utilizing virtual machine. We can try to hack the traffic from host OS to the client OS. 
 
-  [Real USB Device] <---> [HOST OS and VirtualMachine] <---> [Client OS]
+  `[Real USB Device] <---> [HOST OS and VirtualMachine] <---> [Client OS]`
 
   VirtualBox is the only one open source virtual machine with a relatively large user base. And it seems like a good candidate for the purpose.
   
@@ -58,20 +58,6 @@ When the build completes, you might need to build and isntall and load the drive
 But the tricky thing is: it turned out that the drivers were not working on my machine. I had to install a release version VBox (with the same revision number as the source code) which helps to install the drivers correctly.
 
 Not the VBox you build can be used, and you can installed a windows 10 as client machine.
-
-VirtualBox Print Debug Message
-=
-
-There are many verbosity level in VBOX source code. The one can print debug message under release build is:
-
-```c
-LogRel((char* ...))
-```
-Eg. 
-```c
-LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
-```
-You can print message at any place. Note that too much print will slow down the virtual machine speed.
 
 USB Foundmantal Knowledge
 =
@@ -106,3 +92,21 @@ for (unsigned int i = 0; i < pUrbLnx->pKUrb.buffer_length; i++)
     pUrbLnx->pKUrb.buffer[i] = i;
 }
 ```
+
+Debug
+=
+
+There are many verbosity level in VBox source code. The one can print debug message under release build is:
+
+```c
+LogRel((char* ...))
+```
+Eg. 
+```c
+LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
+```
+You can print message at any place. Note that too much print will slow down the virtual machine speed.
+
+USB traffic can also be logged under Pcap format in VBox:
+
+`VBoxManage controlvm "VM name" usbattach "device uuid|address" --capturefile "filename"`
