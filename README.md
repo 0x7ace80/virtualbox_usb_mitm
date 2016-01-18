@@ -1,5 +1,8 @@
 # virtualbox_usb_mitm
 
+Preview
+=
+
 For some resone, I want to implement USB Man-In-The-Middle function. 
 My idea is :
 
@@ -28,7 +31,9 @@ The only drawback is ...$35 cost is kinds of high...
 
   VirtualBox is the only one open source virtual machine with a relatively large user base. And it seems like a good candidate for the purpose.
   
-# VirtualBox compilation setup
+VirtualBox Compilation Setup
+=
+
 VirtualBox itself is 32bit (althrough it can virtualize 64bit OS). So it is really wise to use 32bit OS to build VirtualBox, which avoid a lot of annoying compatibility issues.
 VirtualBox can be build under Window, Linux and OSX, but Linux (I use Ubuntu14_32bit in this case) gives you the most convenience way to setup all the libraries VirtualBox needed. Refer to this link to setup the libraries and build VirtualBox:
 https://www.virtualbox.org/wiki/Linux%20build%20instructions
@@ -54,7 +59,9 @@ But the tricky thing is: it turned out that the drivers were not working on my m
 
 Not the VBox you build can be used, and you can installed a windows 10 as client machine.
 
-# VirtualBox Print debug message.
+VirtualBox Print Debug Message
+=
+
 There are many verbosity level in VBOX source code. The one can print debug message under release build is:
 
 LogRel((char* ...))
@@ -65,13 +72,15 @@ LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
 
 You can print message at any place. Note that too much print will slow down the virtual machine speed.
 
-# USB Foundmantal Knowledge.
+USB Foundmantal Knowledge
+=
 
 All USB traffics in the driver will be carried in the form of URB (USB Request Block), including both the request and response. URB will contain information like endpoint, direction and data payload.
 
 So don't surpise to see a lot of URB related structures and variables in the source code.
 
-# Hack USB traffic
+Hack USB Traffic
+=
 
 VBox virtualized USB device and use the virtualized usb device to communicate with real USB device on host OS.
 
