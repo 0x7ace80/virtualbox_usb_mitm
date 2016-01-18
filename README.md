@@ -57,9 +57,10 @@ When the build completes, you might need to build, install and load the drivers 
 
 `make && make install && make load`
 
-But the `TRICKY` thing is: it turned out that the drivers were not working on my machine. I had to install a release version VBox (with the same revision number as the source code) which helps to install the drivers correctly.
+But the `TRICKY` thing is: it turned out that the drivers were not working on my machine. If I executed the binary `./VirtualBox`, it always reported error and failed when it started to run the virtual machine.
+I had to install a prebuild release version VBox (with the same revision number as the source code) in offical way which helps to install the drivers correctly.
 
-Now the VBox you build can be used, and you can install a windows 10 as client OS.
+Now the VBox you build can work, and you can install a windows 10 as client OS.
 
 USB Foundmantal Knowledge
 =
