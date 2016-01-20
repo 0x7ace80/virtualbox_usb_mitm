@@ -24,6 +24,7 @@ But I found it is not easy to achieve this purpose.
 
 - Some Raspberry-Pi-like-PC can be configured to be a USB-MITM. BeagleBone support USB Gadget by default. There is a USBProxy project based on BeagleBone: https://github.com/dominicgs/USBProxy
 The only drawback is ...$35 cost is kinds of high...
+  You will find many other USB proxy solution, if search "USB proxy" on Github, but they all require hardware involved. 
 
   An alternative way to implement this function is utilizing virtual machine. We can try to hack the traffic from host OS to the client OS. 
 
