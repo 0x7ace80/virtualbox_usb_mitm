@@ -132,7 +132,7 @@ Usually, there are many kinds of URB will go through `usbProxyLinuxUrbReap` func
 Debug
 =
 
-There are many verbosity level in VBox source code. The one can print debug message under release build is:
+There are many verbosity levels in VBox source code. The one can print debug message under release build is:
 
 ```c
 LogRel((char* ...))
@@ -142,6 +142,8 @@ Eg.
 LogRel(("This is a test, Number %d, Name %s", 1, "Test"));
 ```
 You can print message at any place. Note that too much print will slow down the virtual machine.
+
+The log files are located under the same dir with VM files.
 
 USB traffic can also be logged under Pcap format in VBox:
 
