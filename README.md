@@ -56,7 +56,11 @@ Now decompress the source code downloaded from VirtualBox.org and then enter the
 
 `./configure --disable-hardening --target-arch=x86`
 
-It usually takes about 1hr to complete (on my old 2010 Macbook and Yes, I took some time to install Ubuntu on it and setup its drivers). Have a cup of coffee and wait.
+and then start to build:
+
+`source env.sh && kmk all`
+
+It usually takes about 1hr to complete (on my old 2010 Macbook and Yes, I took some time to install Ubuntu and setup its drivers). Have a cup of coffee and wait.
 
 When the build completes, you might need to build, install and load the drivers VBox will use. It can be done by execute command at `out/Linux.x86/release/bin`
 
